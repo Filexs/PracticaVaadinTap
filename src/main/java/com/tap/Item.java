@@ -19,6 +19,7 @@ public class Item {
     private int numeroItems;
     private ArrayList<Item> listaComponentes;
     private double beneficio;
+    private String comprado;
 
     public Item(String nombre, double precioVenta, int numeroItems) {
 
@@ -68,6 +69,8 @@ public class Item {
         }
     }
 
+    //Getters y Setters
+
     public String getNombre() {
         return nombre;
     }
@@ -112,9 +115,15 @@ public class Item {
         return beneficio;
     }
 
+    public String getComprado() { return comprado; }
+
+    public void setComprado(String comprado) {this.comprado = comprado;}
+
     public void setBeneficio(double beneficio) {
         this.beneficio = beneficio;
     }
+
+    //funciones para añadir o quitar un item comprado o no
 
     public void anadirUnidad(){
 
@@ -127,4 +136,6 @@ public class Item {
             this.numeroItems -= 1;
         }
     }
+
+
 }

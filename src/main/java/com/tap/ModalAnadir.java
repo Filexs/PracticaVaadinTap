@@ -23,10 +23,10 @@ public class ModalAnadir extends Window {
 
 
     //Para poder llamar a una sub-vantana, se deberá llamar desde un Item para poder editarlo
-    public ModalAnadir(Tabla tabla){
+    public ModalAnadir(TablaInventario tablaInventario){
 
         //Listener del botón
-        botonAceptar.addClickListener(e -> guardarDatos(tabla));
+        botonAceptar.addClickListener(e -> guardarDatos(tablaInventario));
 
         //Agregamos el contenido de la ventana
         subContent.addComponents(nombre, cantidad, precioVenta, botonAceptar);
@@ -44,13 +44,13 @@ public class ModalAnadir extends Window {
     }
 
 
-    private void guardarDatos(Tabla t){
+    private void guardarDatos(TablaInventario t){
 
         Item item = new Item(nombre.getValue(), Double.parseDouble(precioVenta.getValue()), Integer.parseInt(cantidad.getValue()));
 
         t.anadirElemento(item);
 
-        //Refrescamos la tabla
+        //Refrescamos la tablaInventario
         t.refreshTabla();
 
         close();

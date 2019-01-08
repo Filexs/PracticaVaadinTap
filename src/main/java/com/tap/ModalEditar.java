@@ -30,20 +30,20 @@ public class ModalEditar extends Window {
 
 
     //Para poder llamar a una sub-vantana, se deberá llamar desde un Item para poder editarlo
-    public ModalEditar(Item i, Tabla tabla){
+    public ModalEditar(Item i, TablaInventario tablaInventario){
 
         //Les añadimos los antiguos valores del objeto al modal
         nombre.setValue(i.getNombre());
         cantidad.setValue(i.getNumeroItems()+"");
         precioVenta.setValue(i.getPrecioVenta()+"");
-        botonAceptar.addClickListener(e -> guardarDatos(i, tabla));
+        botonAceptar.addClickListener(e -> guardarDatos(i, tablaInventario));
 
 
         //Agregamos el contenido de la ventana
         subContent.addComponents(nombre, cantidad, precioVenta, label);
 
         //Agregamos los checkboxes
-        crearSeleccion(i, tabla);
+        crearSeleccion(i, tablaInventario);
 
         subContent.addComponent(botonAceptar);
 
@@ -60,12 +60,12 @@ public class ModalEditar extends Window {
     }
 
     //Genera los checkbox
-    private void crearSeleccion(Item i, Tabla tabla){
+    private void crearSeleccion(Item i, TablaInventario tablaInventario){
 
         CheckBox checkbox;
 
         //Creamos la lista de checkbox
-        for (Item item:tabla.getListaItems()) {
+        for (Item item: tablaInventario.getListaItems()) {
 
             //Si el item tiene unidades disponibles y es diferente del item a elaborar, puede utilizarse como "ingrediente"
             if(item != i && item.getNumeroItems() != 0){
@@ -84,7 +84,7 @@ public class ModalEditar extends Window {
     }
 
 
-    private void guardarDatos(Item i, Tabla t){
+    private void guardarDatos(Item i, TablaInventario t){
 
         ArrayList<Item> listaBuffer = new ArrayList<>();
 
@@ -95,6 +95,7 @@ public class ModalEditar extends Window {
             if(cb.getValue()){
 
                 listaBuffer.add(buscarItem(cb.getCaption(), t));
+                t.refreshTabla();
             }
 
         }
@@ -110,13 +111,14 @@ public class ModalEditar extends Window {
 
 
 
-        //Refrescamos la tabla
-        t.refreshTabla();
-
+        //Cerramos el modal
         close();
+
+        //refrescamos la tabla
+        t.refreshTabla();
     }
 
-    private Item buscarItem(String nombre, Tabla t){
+    private Item buscarItem(String nombre, TablaInventario t){
 
         for (Item item:t.getListaItems()) {
 

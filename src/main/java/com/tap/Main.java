@@ -18,8 +18,10 @@ import com.vaadin.ui.*;
 @Theme("mytheme")
 public class Main extends UI {
 
-    Tabla tabla = new Tabla();
-    Button button = new Button("Añadir item");
+    TablaTransaccion tablaTransaccion = new TablaTransaccion();
+    TablaInventario tablaInventario = new TablaInventario(tablaTransaccion);
+    Button botonAnadir = new Button("Añadir item");
+
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -27,15 +29,13 @@ public class Main extends UI {
         final VerticalLayout layout = new VerticalLayout();
 
 
+        final Label nombreTablaInventario = new Label("Tabla de Inventario");
+        final Label nombreTablaTransacciones = new Label("Tabla de Transacciones");
 
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
-
-
-        button.addClickListener(e -> anadirItem());
+        botonAnadir.addClickListener(e -> anadirItem());
 
         
-        layout.addComponents(tabla, button);
+        layout.addComponents(nombreTablaInventario, tablaInventario,  botonAnadir, nombreTablaTransacciones, tablaTransaccion);
         
         setContent(layout);
 
@@ -45,7 +45,7 @@ public class Main extends UI {
     private void anadirItem(){
 
 
-        ModalAnadir modal = new ModalAnadir(tabla);
+        ModalAnadir modal = new ModalAnadir(tablaInventario);
 
         addWindow(modal);
 
